@@ -29,9 +29,7 @@ class MainWindow():
 
         Gtk.main()
 
-er.getProfilesList():
-            comboBox.append_text(i[0] + ": " + i[1])
-        comboBox.append_te
+
     def __fillOrderByComboBox(self):
         comboBox = self.__builder.get_object('sortByComboBox')
         for i in self.__controller.getOrderOptions():
