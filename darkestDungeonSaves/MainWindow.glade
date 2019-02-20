@@ -25,7 +25,8 @@
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkComboBoxText">
+                  <object class="GtkComboBoxText" id="profilesCombo">
+                    <property name="name">profilesCombo</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                   </object>

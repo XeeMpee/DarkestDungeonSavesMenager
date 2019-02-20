@@ -19,6 +19,7 @@ class MainWindow():
         self.__window = self.__builder.get_object("window")
         
         self.__window.set_title('DarkestDungeonSaveMenager')
+        self.__fillProfilesComboBox()
         self.__fillOrderByComboBox()
         self.__builder.get_object('actionNameLabel').set_text('Ready')
         self.__builder.get_object('actionName').set_text('Done')
@@ -32,3 +33,11 @@ class MainWindow():
         for i in self.__controller.getOrderOptions():
             comboBox.append_text(i)
         comboBox.set_active(2)
+
+    def __fillProfilesComboBox(self):
+        comboBox = self.__builder.get_object('profilesCombo')
+        comboBox.append_text('All')
+        for i in self.__controller.getProfilesList():
+            comboBox.append_text(i[0] + ": " + i[1])
+        comboBox.append_text('Archivized')
+        comboBox.set_active(0)
