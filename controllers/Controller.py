@@ -13,7 +13,8 @@ class Controller:
     
     Methods:
     ----------------
-    getOrderOptions() : [str] - Return __orderByOption list.    
+    getOrderOptions() : [str] - Return __orderByOption list.
+    getProfilesList() : [str, str] - Returns __profiles list.    
     generateProfilesList() : void - Generates list of profiles by analyzing game saves directory.
     """
 
@@ -31,6 +32,7 @@ class Controller:
 
     def getOrderOptions(self):
         return self.__orderByOptions
+
 
     def getProfilesList(self):
         return self.__profiles
@@ -52,5 +54,7 @@ class Controller:
                 
                 saves.append((i,name))
                 self.__profiles = saves
+
+    
         
     

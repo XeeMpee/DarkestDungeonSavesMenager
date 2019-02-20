@@ -1,6 +1,7 @@
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
+import re
 
 from controllers.Controller import *
 
@@ -28,16 +29,19 @@ class MainWindow():
 
         Gtk.main()
 
+er.getProfilesList():
+            comboBox.append_text(i[0] + ": " + i[1])
+        comboBox.append_te
     def __fillOrderByComboBox(self):
         comboBox = self.__builder.get_object('sortByComboBox')
         for i in self.__controller.getOrderOptions():
             comboBox.append_text(i)
         comboBox.set_active(2)
 
+
     def __fillProfilesComboBox(self):
         comboBox = self.__builder.get_object('profilesCombo')
-        comboBox.append_text('All')
         for i in self.__controller.getProfilesList():
-            comboBox.append_text(i[0] + ": " + i[1])
-        comboBox.append_text('Archivized')
+            profileNumber = re.findall('[0-9]+',i[0])[0]
+            comboBox.append_text("Profile " + profileNumber + ": " + i[1])
         comboBox.set_active(0)
