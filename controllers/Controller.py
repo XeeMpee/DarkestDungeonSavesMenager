@@ -1,5 +1,7 @@
+from database.Database import *
 import os
 import re
+
 
 class Controller:
     """ 
@@ -55,6 +57,9 @@ class Controller:
                 saves.append((i,name))
                 self.__profiles = saves
 
-    
+    def saveGame(self):
+        database = Database()
+        conn = database.connect()
+
         
     

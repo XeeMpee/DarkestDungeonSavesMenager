@@ -144,8 +144,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSearchEntry" id="findArea">
-                    <property name="name">findArea</property>
+                  <object class="GtkSearchEntry" id="fintArea">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="primary_icon_name">edit-find-symbolic</property>
@@ -185,14 +184,11 @@
                 <property name="can_focus">True</property>
                 <property name="shadow_type">in</property>
                 <child>
-                  <object class="GtkViewport" id="savesViewPort">
+                  <object class="GtkTreeView">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <child>
-                      <object class="GtkListBox" id="savesListBox">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                      </object>
+                    <property name="can_focus">True</property>
+                    <child internal-child="selection">
+                      <object class="GtkTreeSelection"/>
                     </child>
                   </object>
                 </child>
