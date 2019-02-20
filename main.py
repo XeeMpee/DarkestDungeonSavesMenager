@@ -1,5 +1,4 @@
-from MainWindow import *
-from Controller import *
+from views.MainWindow import *
 
 if __name__ == "__main__":
 
