@@ -59,15 +59,14 @@ class MainWindow():
         comboBox.set_active(0)
 
     def __fillSavesArea(self):
-        row = Gtk.ListBoxRow()
+        row = Gtk.ListBoxRow(name="saveRow")
         self.__builder.get_object('savesListBox').add(row)
 
         hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=50)
-        
         newSaveIcon = Gtk.Image()
         newSaveIcon.set_from_file('images/newSave.png')
         hbox.pack_start(newSaveIcon, False, True, 20)
         hbox.pack_start(Gtk.Label('New save...'), False, True, 0)
         hbox.set_size_request(self.__saveBoxRowSize[0], self.__saveBoxRowSize[1])
         row.add(hbox)
-        pass
+

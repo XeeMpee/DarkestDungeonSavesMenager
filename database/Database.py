@@ -24,3 +24,4 @@ class Database():
             print("Database connection problem!")
             print(e)
             exit(-1)
+        return None

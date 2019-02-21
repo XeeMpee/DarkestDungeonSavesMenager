@@ -6,3 +6,6 @@ CREATE TABLE Saves (
     date DATE,
     time TIME
 );
+
+INSERT INTO Saves (name, description, profile, date, time)
+VALUES ("Test save", "Save for testing", 1, date('now'), time('now'));

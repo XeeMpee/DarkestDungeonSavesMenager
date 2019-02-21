@@ -1,10 +1,12 @@
 class Save:
     
-    def __init__(self, id=None, name=None, description=None, datetime=None):
+    def __init__(self, name=None, profile=None, description=None, id=None):
         self.__id = id
         self.__name = name
         self.__description = description
-        self.__datetime = datetime
+        self.__profile = profile 
+        self.__date = None
+        self.__time = None
 
     
     def getId(self):
@@ -13,11 +15,17 @@ class Save:
     def getName(self):
         return self.__name
 
+    def getProfile(self):
+        return self.__profile
+
     def getDescription(self):
         return self.__description
 
-    def getDatetime(self):
-        return self.__datetime
+    def getDate(self):
+        return self.__date
+
+    def getTime(self):
+        return self.__time
 
 
     def setId(self, id):
@@ -26,10 +34,14 @@ class Save:
     def setName(self, name):
         self.__name = name
 
+    def setProfile(self, profileNumber):
+        self.__profile = profileNumber
+
     def setDescription(self, description):
         self.__description = description
 
-    def setDatetime(self, str):
-        #TODO        
-        pass
+    def setDate(self, date):
+        self.__date = date  
 
+    def setTime(self, time):
+        self.__time = time
