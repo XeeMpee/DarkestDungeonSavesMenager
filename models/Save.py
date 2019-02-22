@@ -1,10 +1,9 @@
 class Save:
     
-    def __init__(self, name=None, profile=None, description=None, id=None):
+    def __init__(self, name=None, description=None, id=None):
         self.__id = id
         self.__name = name
         self.__description = description
-        self.__profile = profile 
         self.__date = None
         self.__time = None
 
@@ -15,8 +14,8 @@ class Save:
     def getName(self):
         return self.__name
 
-    def getProfile(self):
-        return self.__profile
+    # def getProfile(self):
+    #     return self.__profile
 
     def getDescription(self):
         return self.__description
@@ -34,8 +33,8 @@ class Save:
     def setName(self, name):
         self.__name = name
 
-    def setProfile(self, profileNumber):
-        self.__profile = profileNumber
+    # def setProfile(self, profileNumber):
+    #     self.__profile = profileNumber
 
     def setDescription(self, description):
         self.__description = description

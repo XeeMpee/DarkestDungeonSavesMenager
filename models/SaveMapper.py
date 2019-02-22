@@ -9,12 +9,12 @@ class SaveMapper:
     def insertSave(self, save):
         name = save.getName()
         description = save.getDescription()
-        profile = save.getProfile()
+    
 
-        sql = '''INSERT INTO Saves (name, description, profile, date, time)
-        VALUES (?,?,?,date('now'), time('now'));
+        sql = '''INSERT INTO Saves (name, description, date, time)
+        VALUES (?,?,date('now'), time('now'));
         '''
-        task = (name,description,profile)
+        task = (name,description)
 
         cur = self.__connection.cursor()
         cur.execute(sql,task)

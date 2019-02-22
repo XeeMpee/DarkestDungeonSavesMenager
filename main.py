@@ -1,4 +1,4 @@
-from views.MainWindow import *
+from views.MainWindow.MainWindow import *
 
 if __name__ == "__main__":
 

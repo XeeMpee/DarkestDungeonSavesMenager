@@ -5,6 +5,7 @@ from gi.repository.GdkPixbuf import Pixbuf
 import re
 
 from controllers.Controller import *
+from views.NewSaveDialog.NewSaveDialog import *
 
 class MainWindow():
     """ 
@@ -19,7 +20,7 @@ class MainWindow():
         self.__saveBoxRowSize = (0,80)
 
     def run(self):
-        self.__builder.add_from_file("./views/MainWindow.glade")
+        self.__builder.add_from_file("./views/MainWindow/MainWindow.glade")
         self.__window = self.__builder.get_object("window")
         
         self.__window.set_title('DarkestDungeonSaveMenager')
@@ -34,7 +35,7 @@ class MainWindow():
         self.__builder.get_object('saveGameButton').connect("clicked",self.__saveGame)
 
         style_provider = Gtk.CssProvider()
-        style_provider.load_from_path("views/MainWindow.css")
+        style_provider.load_from_path("views/MainWindow/MainWindow.css")
         Gtk.StyleContext.add_provider_for_screen(
             Gdk.Screen.get_default(), style_provider,
             Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
@@ -60,8 +61,8 @@ class MainWindow():
         comboBox.set_active(0)
 
     def __fillSavesArea(self):
-        row = Gtk.ListBoxRow(name="saveRow")
-        self.__builder.get_object('savesListBox').add(row)
+        self.__newSaveRow = Gtk.ListBoxRow(name="saveRow")
+        self.__builder.get_object('savesListBox').add(self.__newSaveRow)
 
         hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=50)
         newSaveIcon = Gtk.Image()
@@ -69,13 +70,14 @@ class MainWindow():
         hbox.pack_start(newSaveIcon, False, True, 20)
         hbox.pack_start(Gtk.Label('New save...'), False, True, 0)
         hbox.set_size_request(self.__saveBoxRowSize[0], self.__saveBoxRowSize[1])
-        row.add(hbox)
+        self.__newSaveRow.add(hbox)
 
 
 
     def __saveGame(self, arg):
-        builder = Gtk.Builder()
-        builder.add_from_file('views/NewSaveDialog.glade')
-        saveWidnow = Gtk.Window()
-        saveWidnow = builder.get_object('newSaveWindow')
-        saveWidnow.show_all()
+        
+        if(self.__newSaveRow.is_selected()):
+            dialog = NewSaveDialog()
+            dialog.run()
+        else:
+            print('nooo')
