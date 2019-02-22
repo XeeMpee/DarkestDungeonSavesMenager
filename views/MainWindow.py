@@ -31,6 +31,7 @@ class MainWindow():
         self.__builder.get_object('actionName').set_text('Done')
         self.__window.connect('destroy', Gtk.main_quit)
 
+        self.__builder.get_object('saveGameButton').connect("clicked",self.__saveGame)
 
         style_provider = Gtk.CssProvider()
         style_provider.load_from_path("views/MainWindow.css")
@@ -70,3 +71,11 @@ class MainWindow():
         hbox.set_size_request(self.__saveBoxRowSize[0], self.__saveBoxRowSize[1])
         row.add(hbox)
 
+
+
+    def __saveGame(self, arg):
+        builder = Gtk.Builder()
+        builder.add_from_file('views/NewSaveDialog.glade')
+        saveWidnow = Gtk.Window()
+        saveWidnow = builder.get_object('newSaveWindow')
+        saveWidnow.show_all()
