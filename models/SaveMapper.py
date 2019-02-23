@@ -24,7 +24,7 @@ class SaveMapper:
 
     
     def getAllSaves(self):
-        sql = '''SELECT * FROM Saves'''
+        sql = '''SELECT * FROM Saves ORDER BY date DESC, time DESC;'''
         
         cur = self.__connection.cursor()
         cur.execute(sql)
