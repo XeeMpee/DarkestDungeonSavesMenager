@@ -1,5 +1,13 @@
+from enum import Enum
+
 from database.Database import *
 from models.Save import *
+
+
+class OrderEnum(Enum):
+    TIMEDESC = 0
+    TIMEASC = 1
+    NAME = 2
 
 class SaveMapper:
 
@@ -23,8 +31,14 @@ class SaveMapper:
         return cur.lastrowid
 
     
-    def getAllSaves(self):
-        sql = '''SELECT * FROM Saves ORDER BY date DESC, time DESC;'''
+    def getAllSaves(self, orderoption=OrderEnum.TIMEDESC):
+        
+        if(orderoption == OrderEnum.TIMEDESC):
+            sql = '''SELECT * FROM Saves ORDER BY date DESC, time DESC, name;'''
+        elif(orderoption == OrderEnum.TIMEASC):
+            sql = '''SELECT * FROM Saves ORDER BY date ASC, time ASC, name;'''
+        elif(orderoption == OrderEnum.NAME):
+            sql = '''SELECT * FROM Saves ORDER BY name;'''
         
         cur = self.__connection.cursor()
         cur.execute(sql)
