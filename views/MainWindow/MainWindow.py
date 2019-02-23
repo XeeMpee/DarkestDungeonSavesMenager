@@ -5,6 +5,7 @@ from gi.repository.GdkPixbuf import Pixbuf
 import re
 
 from controllers.Controller import *
+from controllers.OrderEnum import *
 from views.NewSaveDialog.NewSaveDialog import *
 
 class MainWindow():
@@ -32,7 +33,9 @@ class MainWindow():
         self.__builder.get_object('actionName').set_text('Done')
         self.__window.connect('destroy', Gtk.main_quit)
 
-        self.__builder.get_object('saveGameButton').connect("clicked",self.__saveGame)
+        self.__builder.get_object('saveGameButton').connect("clicked",self.__saveGameHandle)
+        self.__builder.get_object('refreshButton').connect("clicked",self.__refresh)
+        self.__builder.get_object('sortByComboBox').connect("changed",self.__refresh)
 
         style_provider = Gtk.CssProvider()
         style_provider.load_from_path("views/MainWindow/MainWindow.css")
@@ -61,7 +64,7 @@ class MainWindow():
             comboBox.append_text("Profile " + profileNumber + ": " + i[1])
         comboBox.set_active(0)
 
-    def __fillSavesArea(self):
+    def __fillSavesArea(self, order=OrderEnum.TIMEDESC):
         self.__newSaveRow = Gtk.ListBoxRow(name="saveRow")
         self.__builder.get_object('savesListBox').add(self.__newSaveRow)
 
@@ -74,7 +77,7 @@ class MainWindow():
         self.__newSaveRow.add(hbox)
 
         saveMapper = SaveMapper()
-        saves = saveMapper.getAllSaves()
+        saves = saveMapper.getAllSaves(order)
         
         for i in saves:
             self.__builder.get_object('savesListBox').add(self.__createSaveRow(i))
@@ -123,10 +126,26 @@ class MainWindow():
             return row
  
  
-    def __saveGame(self, arg):
+    def __clearSaveListBox(self):
+        savesListBox = self.__builder.get_object("savesListBox")
+        saves = savesListBox.get_children()
+        for i in saves:
+            savesListBox.remove(i)
+    
+    
+    def __refresh(self, order=OrderEnum.TIMEDESC):
+        self.__clearSaveListBox()
+        orderByOption = self.__builder.get_object("sortByComboBox").get_active()
+        enum = (OrderEnum)(orderByOption)
+        self.__fillSavesArea(enum)
+        self.__window.show_all()
+
+    # Handles:
+
+    def __saveGameHandle(self, arg):
         if(self.__newSaveRow.is_selected()):
             dialog = NewSaveDialog()
             dialog.run()
         else:
             print('nooo')
- 
+
