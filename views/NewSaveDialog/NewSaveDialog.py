@@ -29,5 +29,8 @@ class NewSaveDialog:
         name = self.__builder.get_object("nameEntry").get_text()
         buffer = self.__builder.get_object("descriptionTextArea").get_buffer()
         description = buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter(), True)
+        progressBar = self.__builder.get_object("progressBar")
+        print(progressBar)
+        progressBar.pulse()
         self.__controller.saveGame(name,description)
         self.__window.destroy()

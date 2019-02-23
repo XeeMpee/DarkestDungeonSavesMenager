@@ -1,4 +1,5 @@
 from database.Database import *
+from models.Save import *
 
 class SaveMapper:
 
@@ -20,5 +21,26 @@ class SaveMapper:
         cur.execute(sql,task)
         self.__connection.commit()
         return cur.lastrowid
+
+    
+    def getAllSaves(self):
+        sql = '''SELECT * FROM Saves'''
+        
+        cur = self.__connection.cursor()
+        cur.execute(sql)
+        all = cur.fetchall()
+
+        savesList = list()
+        for i in all:
+            id = i[0]
+            name = i[1]
+            description = i[2]
+            date = i[3]
+            time = i[4]
+            save = Save(name,description,date,time,id)
+            savesList.append(save)
+        
+        return savesList
+
 
 

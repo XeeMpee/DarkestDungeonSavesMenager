@@ -1,11 +1,11 @@
 class Save:
     
-    def __init__(self, name=None, description=None, id=None):
+    def __init__(self, name=None, description=None, date=None, time=None, id=None):
         self.__id = id
         self.__name = name
         self.__description = description
-        self.__date = None
-        self.__time = None
+        self.__date = date
+        self.__time = time
 
     
     def getId(self):
@@ -44,3 +44,6 @@ class Save:
 
     def setTime(self, time):
         self.__time = time
+
+    def print(self):
+        print('id:{},name:"{}",description:"{}",date:"{}",time:"{}"'.format(self.__id,self.__name,self.__description,self.__date,self.__time))
