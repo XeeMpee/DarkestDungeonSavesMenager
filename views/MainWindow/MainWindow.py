@@ -49,8 +49,9 @@ class MainWindow():
     def __fillOrderByComboBox(self):
         comboBox = self.__builder.get_object('sortByComboBox')
         for i in self.__controller.getOrderOptions():
-            comboBox.append_text(i)
+            comboBox.append_text(i[0])
         comboBox.set_active(2)
+
 
 
     def __fillProfilesComboBox(self):
@@ -76,9 +77,11 @@ class MainWindow():
         saves = saveMapper.getAllSaves()
         
         for i in saves:
-            row = Gtk.ListBoxRow()
-            self.__builder.get_object('savesListBox').add(row)
+            self.__builder.get_object('savesListBox').add(self.__createSaveRow(i))
 
+   
+    def __createSaveRow(self, i):
+            row = Gtk.ListBoxRow()
             hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=50)
             saveIcon = Gtk.Image()
             saveIcon.set_from_file('images/save.png')
@@ -117,9 +120,10 @@ class MainWindow():
 
             hbox.set_size_request(self.__saveBoxRowSize[0], self.__saveBoxRowSize[1])
             row.add(hbox)
-
+            return row
+ 
+ 
     def __saveGame(self, arg):
-        
         if(self.__newSaveRow.is_selected()):
             dialog = NewSaveDialog()
             dialog.run()

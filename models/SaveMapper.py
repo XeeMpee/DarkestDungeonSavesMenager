@@ -1,13 +1,6 @@
-from enum import Enum
-
 from database.Database import *
 from models.Save import *
-
-
-class OrderEnum(Enum):
-    TIMEDESC = 0
-    TIMEASC = 1
-    NAME = 2
+from controllers.OrderEnum import *
 
 class SaveMapper:
 

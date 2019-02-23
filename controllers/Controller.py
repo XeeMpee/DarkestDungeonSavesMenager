@@ -4,6 +4,7 @@ import re
 
 from models.Save import *
 from models.SaveMapper import *
+from controllers.OrderEnum import *
 
 class Controller:
     """ 
@@ -27,9 +28,9 @@ class Controller:
         self.__pathToSaves = '/home/xeempee/.local/share/Steam/userdata/109096097/262060/remote/'
         self.__profiles = list()
         self.__orderByOptions = [
-            "Name",
-            "Date ascending",
-            "Date descending"
+            ("Name",OrderEnum.NAME),
+            ("Date ascending",OrderEnum.TIMEASC),
+            ("Date descending",OrderEnum.TIMEDESC)
         ]
         self.generateProfilesList()
 
