@@ -7,6 +7,7 @@ import re
 from controllers.Controller import *
 from controllers.OrderEnum import *
 from views.NewSaveDialog.NewSaveDialog import *
+from views.ReplaceSaveDialog.ReplaceSaveDialog import *
 
 class MainWindow():
     """ 
@@ -113,11 +114,12 @@ class MainWindow():
             deleteButton.set_image(deleteIcon)
 
             modifyIcon = Gtk.Image()
-            modifyIcon.set_from_file('images/load.png')
+            modifyIcon.set_from_file('images/modify.png')
             modifyButton = Gtk.Button()
             modifyButton.set_image(modifyIcon)
             
             optionBox.pack_start(loadButton,False,False,0)
+            optionBox.pack_start(modifyButton,False,False,0)
             optionBox.pack_start(deleteButton,False,False,0)
             hbox.pack_end(optionBox,False,False,0)
 
@@ -140,12 +142,12 @@ class MainWindow():
         self.__fillSavesArea(enum)
         self.__window.show_all()
 
-    # Handles:
-
     def __saveGameHandle(self, arg):
         if(self.__newSaveRow.is_selected()):
             dialog = NewSaveDialog()
             dialog.run()
         else:
-            print('nooo')
+            dialog = ReplaceSaveDialog(self)
+            dialog.run()
+        
 

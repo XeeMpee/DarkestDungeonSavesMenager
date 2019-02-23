@@ -35,6 +35,7 @@ class SaveMapper:
         
         cur = self.__connection.cursor()
         cur.execute(sql)
+        self.__connection.commit()
         all = cur.fetchall()
 
         savesList = list()
