@@ -91,7 +91,7 @@ class MainWindow():
             saveIcon = Gtk.Image()
             saveIcon.set_from_file('images/save.png')
             hbox.pack_start(saveIcon, False, True, 20)
-            hbox.pack_start(Gtk.Label(i.getName()), False, True, 0)
+            hbox.pack_start(Gtk.Label(i.getName(), name="saveLabel"), False, True, 0)
             timebox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,spacing=50)
             
             hbox.pack_end(timebox, False, False, 0)
@@ -149,8 +149,9 @@ class MainWindow():
         if(self.__newSaveRow.is_selected()):
             dialog = NewSaveDialog()
             dialog.run()
-        else:
-            dialog = ReplaceSaveDialog(self)
+        elif(len(self.__builder.get_object("savesListBox").get_selected_rows()) > 0):
+            print(self.__builder.get_object("savesListBox").get_selected_rows())
+            dialog = ReplaceSaveDialog(self, self.__builder.get_object("savesListBox").get_selected_rows()[0].get_children()[0].get_children()[1].get_text())
             dialog.run()
         
 
