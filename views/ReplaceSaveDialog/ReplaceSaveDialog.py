@@ -15,7 +15,7 @@ class ReplaceSaveDialog:
 
         self.__builder.add_from_file('views/ReplaceSaveDialog/ReplaceSaveDialog.glade')
         self.__window = self.__builder.get_object("replaceSaveWindow")
-        self.__builder.get_object("saveNameLabel").set_text(" {} ".format(saveName))
+        self.__builder.get_object("saveNameLabel").set_text(' " {} " '.format(saveName))
 
         # Handles:
         self.__builder.get_object("noButton").connect("clicked",self.__noButtonHandle)
@@ -23,7 +23,6 @@ class ReplaceSaveDialog:
 
     def run(self):
         self.__window.show_all()
-        print(self.__saveName)
 
 
     def __noButtonHandle(self,arg):

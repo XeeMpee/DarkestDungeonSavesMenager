@@ -58,5 +58,15 @@ class SaveMapper:
         cur.execute(sql)
         self.__connection.commit()
 
+    def modifySave(self, save, name, description):
+ 
+        sql = '''UPDATE Saves SET name="{}",description="{}" WHERE id={}'''.format(name, description, save.getId())
+        
+        cur = self.__connection.cursor()
+        cur.execute(sql)
+        self.__connection.commit()
+
+   
+
 
 

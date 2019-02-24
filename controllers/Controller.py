@@ -69,6 +69,10 @@ class Controller:
         saveMapper = SaveMapper()
         saveMapper.deleteSave(save)
 
+    def modifySave(self, save, name, description):
+        saveMapper = SaveMapper()
+        saveMapper.modifySave(save, name, description)
+
 
         
     

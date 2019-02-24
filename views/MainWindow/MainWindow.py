@@ -9,6 +9,8 @@ from controllers.OrderEnum import *
 from views.NewSaveDialog.NewSaveDialog import *
 from views.ReplaceSaveDialog.ReplaceSaveDialog import *
 from views.DeleteSaveDialog.DeleteSaveDialog import *
+from views.UploadSaveDialog.UploadSaveDialog import *
+from views.ModifySaveDialog.ModifySaveDialog import *
 
 class MainWindow():
     """ 
@@ -108,6 +110,7 @@ class MainWindow():
             loadButton = Gtk.Button()
             loadButton.set_image(loadIcon)
             loadButton.set_size_request(30,30)
+            loadButton.connect("clicked", self.__uploadButtonClicked,i)
             
             deleteButton = Gtk.Button()
             deleteIcon = Gtk.Image()
@@ -119,7 +122,7 @@ class MainWindow():
             modifyIcon.set_from_file('images/modify.png')
             modifyButton = Gtk.Button()
             modifyButton.set_image(modifyIcon)
-
+            modifyButton.connect("clicked",self.__modifyButtonClicked,i)
             
             optionBox.pack_start(loadButton,False,False,0)
             optionBox.pack_start(modifyButton,False,False,0)
@@ -138,7 +141,7 @@ class MainWindow():
             savesListBox.remove(i)
     
     
-    def refresh(self, order=OrderEnum.TIMEDESC):
+    def refresh(self, order=OrderEnum.TIMEDESC):    
         self.__clearSaveListBox()
         orderByOption = self.__builder.get_object("sortByComboBox").get_active()
         enum = (OrderEnum)(orderByOption)
@@ -158,3 +161,14 @@ class MainWindow():
     def  __deleteButtonClicked(self, widget, save):
         dialog = DeleteSaveDialog(self, self.__controller,save)
         dialog.run()
+
+    def __uploadButtonClicked(self,widget,save):
+        profileNumber = self.__builder.get_object("profilesCombo").get_active()
+        dialog = UploadSaveDialog(self, self.__controller,save,profileNumber)
+        dialog.run()
+
+    def __modifyButtonClicked(self,widget,save):
+        dialog = ModifySaveDialog(self,self.__controller,save)
+        dialog.run()
+
+       
