@@ -65,6 +65,10 @@ class Controller:
         saveMapper = SaveMapper()
         saveMapper.insertSave(save)
 
+    def deleteSave(self,save):
+        saveMapper = SaveMapper()
+        saveMapper.deleteSave(save)
+
 
         
     

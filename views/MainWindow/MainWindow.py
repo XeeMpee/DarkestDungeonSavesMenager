@@ -8,6 +8,7 @@ from controllers.Controller import *
 from controllers.OrderEnum import *
 from views.NewSaveDialog.NewSaveDialog import *
 from views.ReplaceSaveDialog.ReplaceSaveDialog import *
+from views.DeleteSaveDialog.DeleteSaveDialog import *
 
 class MainWindow():
     """ 
@@ -35,8 +36,8 @@ class MainWindow():
         self.__window.connect('destroy', Gtk.main_quit)
 
         self.__builder.get_object('saveGameButton').connect("clicked",self.__saveGameHandle)
-        self.__builder.get_object('refreshButton').connect("clicked",self.__refresh)
-        self.__builder.get_object('sortByComboBox').connect("changed",self.__refresh)
+        self.__builder.get_object('refreshButton').connect("clicked",self.refresh)
+        self.__builder.get_object('sortByComboBox').connect("changed",self.refresh)
 
         style_provider = Gtk.CssProvider()
         style_provider.load_from_path("views/MainWindow/MainWindow.css")
@@ -112,11 +113,13 @@ class MainWindow():
             deleteIcon = Gtk.Image()
             deleteIcon.set_from_file('images/delete.png')
             deleteButton.set_image(deleteIcon)
+            deleteButton.connect("clicked",self.__deleteButtonClicked,i)
 
             modifyIcon = Gtk.Image()
             modifyIcon.set_from_file('images/modify.png')
             modifyButton = Gtk.Button()
             modifyButton.set_image(modifyIcon)
+
             
             optionBox.pack_start(loadButton,False,False,0)
             optionBox.pack_start(modifyButton,False,False,0)
@@ -135,7 +138,7 @@ class MainWindow():
             savesListBox.remove(i)
     
     
-    def __refresh(self, order=OrderEnum.TIMEDESC):
+    def refresh(self, order=OrderEnum.TIMEDESC):
         self.__clearSaveListBox()
         orderByOption = self.__builder.get_object("sortByComboBox").get_active()
         enum = (OrderEnum)(orderByOption)
@@ -151,3 +154,6 @@ class MainWindow():
             dialog.run()
         
 
+    def  __deleteButtonClicked(self, widget, save):
+        dialog = DeleteSaveDialog(self, self.__controller,save)
+        dialog.run()

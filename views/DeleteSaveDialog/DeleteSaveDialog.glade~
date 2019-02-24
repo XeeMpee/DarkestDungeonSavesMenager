@@ -2,7 +2,7 @@
 <!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
-  <object class="GtkWindow" id="replaceSaveWindow">
+  <object class="GtkWindow" id="deleteSaveWindow">
     <property name="can_focus">False</property>
     <property name="resizable">False</property>
     <property name="decorated">False</property>
@@ -31,7 +31,7 @@
           <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Do you want to replace your save?</property>
+            <property name="label" translatable="yes">Do you want to delete your save?</property>
           </object>
           <packing>
             <property name="expand">True</property>
@@ -62,8 +62,6 @@
           <object class="GtkProgressBar" id="progressBar">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="margin_left">20</property>
-            <property name="margin_right">20</property>
             <property name="margin_top">20</property>
           </object>
           <packing>

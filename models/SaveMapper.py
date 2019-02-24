@@ -50,5 +50,13 @@ class SaveMapper:
         
         return savesList
 
+    def deleteSave(self, save):
+        
+        sql = '''DELETE FROM Saves WHERE id={}'''.format(save.getId())
+        
+        cur = self.__connection.cursor()
+        cur.execute(sql)
+        self.__connection.commit()
+
 
 

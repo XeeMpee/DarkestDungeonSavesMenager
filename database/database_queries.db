@@ -6,5 +6,14 @@ CREATE TABLE Saves (
     time TIME
 );
 
-INSERT INTO Saves (name, description, profile, date, time)
-VALUES ("Test save", "Save for testing", 1, date('now'), time('now'));
+INSERT INTO Saves (name, description, date, time)
+VALUES ("Test save", "Save for testing", date('now'), time('now'));
+
+INSERT INTO Saves(name,description,date,time) VALUES ("Save1", "Desc 1", "2019-02-23", "13:43:22");
+INSERT INTO Saves(name,description,date,time) VALUES ("Save2", "Desc 2", "2019-03-13", "17:23:12");
+INSERT INTO Saves(name,description,date,time) VALUES ("Save3", "Desc 3", "2019-01-30", "15:23:11");
+INSERT INTO Saves(name,description,date,time) VALUES ("Save4", "Desc 4", "2018-12-24", "13:13:27");
+INSERT INTO Saves(name,description,date,time) VALUES ("Save5", "Desc 5", "2018-05-14", "10:13:42");
+INSERT INTO Saves(name,description,date,time) VALUES ("Save6", "Desc 6", "2017-09-01", "09:09:22");
+INSERT INTO Saves(name,description,date,time) VALUES ("Save7", "Desc 7", "2017-12-11", "18:21:02");
+INSERT INTO Saves(name,description,date,time) VALUES ("Save8", "Desc 8", "2018-06-06", "16:14:00");
