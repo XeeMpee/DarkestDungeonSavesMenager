@@ -152,12 +152,13 @@ class MainWindow():
         enum = (OrderEnum)(orderByOption)
         self.__fillSavesArea(enum)
         self.__window.show_all()
+        
 
     def __saveGameHandle(self, arg):
         if(self.__newSaveRow.is_selected()):
             
             profileNumber = self.__builder.get_object("profilesCombo").get_active()        
-            dialog = NewSaveDialog(profileNumber)
+            dialog = NewSaveDialog(self,profileNumber)
             dialog.run()
         elif(len(self.__builder.get_object("savesListBox").get_selected_rows()) > 0):
             
@@ -175,6 +176,7 @@ class MainWindow():
         profileNumber = self.__builder.get_object("profilesCombo").get_active()
         dialog = UploadSaveDialog(self, self.__controller,save,profileNumber)
         dialog.run()
+
 
     def __modifyButtonClicked(self,widget,save):
         dialog = ModifySaveDialog(self,self.__controller,save)

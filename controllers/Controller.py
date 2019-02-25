@@ -65,11 +65,18 @@ class Controller:
         save = Save(name,description)
         saveMapper = SaveMapper()
         saveMapper.insertSave(save)
-        self.__copySaveFiles(profileNumber)
+        id = saveMapper.getIdentCurrent()
+        self.__copySaveFiles(profileNumber, id)
+
+    def saveGameByReplacing(self, save, profileNumber):
+        id = save.getId()
+        self.__copySaveFiles(profileNumber, id)        
 
     def deleteSave(self,save):
         saveMapper = SaveMapper()
         saveMapper.deleteSave(save)
+        self.__deleteSaveFiles(save.getId())
+
 
     def modifySave(self, save, name, description):
         saveMapper = SaveMapper()
@@ -77,10 +84,10 @@ class Controller:
 
 
         
-    def __copySaveFiles(self, profileNumber):
+    def __copySaveFiles(self, profileNumber, saveId):
         
         srcPath = self.__pathToSaves + "/" + self.__profiles[profileNumber][0]
-        destinyPath = "saves/" + self.__profiles[profileNumber][0]
+        destinyPath = "saves/" + (str)(saveId)
 
         if(not os.path.isdir(srcPath)):
             print("No source file found!")
@@ -90,3 +97,11 @@ class Controller:
             print('No destiny file alredy exists... deleting!')
             shutil.rmtree(destinyPath)
         shutil.copytree(srcPath,destinyPath)
+    
+
+    def __deleteSaveFiles(self, saveId):
+        path = "saves/"+(str)(saveId)
+        shutil.rmtree(path)
+
+    def __uploadSave(self, save, profileNumber):
+        #TODO

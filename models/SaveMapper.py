@@ -66,7 +66,13 @@ class SaveMapper:
         cur.execute(sql)
         self.__connection.commit()
 
-   
-
+    def getIdentCurrent(self):
+        sql = """SELECT last_insert_rowid(); """
+        cur = self.__connection.cursor()
+        cur.execute(sql)
+        self.__connection.commit()
+        all = cur.fetchall()
+        identCurrent = all[0][0]
+        return (identCurrent)
 
 
