@@ -89,7 +89,4 @@ class Controller:
         if(os.path.isdir(destinyPath)):
             print('No destiny file alredy exists... deleting!')
             shutil.rmtree(destinyPath)
-            return
-            
-        
         shutil.copytree(srcPath,destinyPath)
