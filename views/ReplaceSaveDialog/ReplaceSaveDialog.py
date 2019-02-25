@@ -6,8 +6,8 @@ from controllers.Controller import *
 
 class ReplaceSaveDialog:
     
-    def __init__(self, parentWindow, saveName):
-        self.__controller = Controller()
+    def __init__(self, parentWindow, controller, saveName):
+        self.__controller = controller
         self.__builder = Gtk.Builder()
         self.__saveName = saveName
 
@@ -30,4 +30,6 @@ class ReplaceSaveDialog:
         pass
     
     def __yesButtonHandle(self,arg):
+        
+        self.__controller.saveGame()
         pass

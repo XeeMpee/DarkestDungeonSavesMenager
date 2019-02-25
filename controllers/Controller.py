@@ -1,6 +1,7 @@
 from database.Database import *
 import os
 import re
+import shutil
 
 from models.Save import *
 from models.SaveMapper import *
@@ -60,10 +61,11 @@ class Controller:
                 saves.append((i,name))
                 self.__profiles = saves
 
-    def saveGame(self, name, description):
+    def saveGame(self, name, description, profileNumber):
         save = Save(name,description)
         saveMapper = SaveMapper()
         saveMapper.insertSave(save)
+        self.__copySaveFiles(profileNumber)
 
     def deleteSave(self,save):
         saveMapper = SaveMapper()
@@ -75,4 +77,19 @@ class Controller:
 
 
         
-    
+    def __copySaveFiles(self, profileNumber):
+        
+        srcPath = self.__pathToSaves + "/" + self.__profiles[profileNumber][0]
+        destinyPath = "saves/" + self.__profiles[profileNumber][0]
+
+        if(not os.path.isdir(srcPath)):
+            print("No source file found!")
+            return
+        
+        if(os.path.isdir(destinyPath)):
+            print('No destiny file alredy exists... deleting!')
+            shutil.rmtree(destinyPath)
+            return
+            
+        
+        shutil.copytree(srcPath,destinyPath)

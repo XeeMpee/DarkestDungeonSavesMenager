@@ -24,6 +24,8 @@ class MainWindow():
 
         self.__saveBoxRowSize = (0,80)
 
+        self.__savesList = list()
+
     def run(self):
         self.__builder.add_from_file("./views/MainWindow/MainWindow.glade")
         self.__window = self.__builder.get_object("window")
@@ -93,6 +95,7 @@ class MainWindow():
             saveIcon = Gtk.Image()
             saveIcon.set_from_file('images/save.png')
             hbox.pack_start(saveIcon, False, True, 20)
+            hbox.pack_start(Gtk.Label(i.getId()), False, False, 0)
             hbox.pack_start(Gtk.Label(i.getName(), name="saveLabel"), False, True, 0)
             timebox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,spacing=50)
             
@@ -131,6 +134,8 @@ class MainWindow():
 
             hbox.set_size_request(self.__saveBoxRowSize[0], self.__saveBoxRowSize[1])
             row.add(hbox)
+            
+            self.__savesList.append((row,i))
             return row
  
  
@@ -150,11 +155,16 @@ class MainWindow():
 
     def __saveGameHandle(self, arg):
         if(self.__newSaveRow.is_selected()):
-            dialog = NewSaveDialog()
+            
+            profileNumber = self.__builder.get_object("profilesCombo").get_active()  
+            print(profileNumber)      
+            dialog = NewSaveDialog(profileNumber)
             dialog.run()
         elif(len(self.__builder.get_object("savesListBox").get_selected_rows()) > 0):
             print(self.__builder.get_object("savesListBox").get_selected_rows())
-            dialog = ReplaceSaveDialog(self, self.__builder.get_object("savesListBox").get_selected_rows()[0].get_children()[0].get_children()[1].get_text())
+            saveName= self.__builder.get_object("savesListBox").get_selected_rows()[0].get_children()[0].get_children()[1].get_text()
+            
+            dialog = ReplaceSaveDialog(self, self.__controller, saveName)
             dialog.run()
         
 

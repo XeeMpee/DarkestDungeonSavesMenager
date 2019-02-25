@@ -7,9 +7,10 @@ from controllers.Controller import *
 
 class NewSaveDialog:
 
-    def __init__(self):
+    def __init__(self,profileNumber):
         self.__controller = Controller()
         self.__builder = Gtk.Builder()
+        self.__profileNumber = profileNumber
 
         self.__builder.add_from_file('views/NewSaveDialog/NewSaveDialog.glade')
         self.__window = self.__builder.get_object("newSaveWindow")
@@ -32,5 +33,5 @@ class NewSaveDialog:
         progressBar = self.__builder.get_object("progressBar")
         print(progressBar)
         progressBar.pulse()
-        self.__controller.saveGame(name,description)
+        self.__controller.saveGame(name,description,self.__profileNumber)
         self.__window.destroy()
