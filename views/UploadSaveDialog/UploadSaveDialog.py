@@ -38,4 +38,5 @@ class UploadSaveDialog:
     def __yesButtonHandle(self,arg):
         # self.__controller.uplaodSave(self.__save)
         self.__builder.get_object("progressBar").pulse()
+        self.__controller.uploadSave(self.__save,self.__profileNumber)
         self.__window.destroy()

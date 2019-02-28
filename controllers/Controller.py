@@ -52,12 +52,15 @@ class Controller:
         for i in listOfProfiles:
             if(re.search('^profile_*',i)):
                 
-                fd = os.open(str(self.__pathToSaves + i + "/persist.game.json"),os.O_RDONLY)
-                text = os.read(fd,10000)
-                textTrim1 = re.findall('estatename[\\\\0x1]+[a-zA-Z]+',str(text))[0]
-                textTrim2 = textTrim1[10:]
-                name = re.findall('[0-15][a-zA-Z]+',textTrim2)[0][1:]
-                
+                # fd = os.open(str(self.__pathToSaves + i + "/persist.game.json"),os.O_RDONLY)
+                # text = os.read(fd,10000)
+                # print(text)
+                # textTrim1 = re.findall('estatename[\\\\0x1]+[a-zA-Z]+',str(text))[0]
+                # textTrim2 = textTrim1[10:]
+                # name = re.findall('[0-15][a-zA-Z]+',textTrim2)
+                # print(name)
+                # name = name[0][1:]
+                name = "hotfix"
                 saves.append((i,name))
                 self.__profiles = saves
 
@@ -76,6 +79,10 @@ class Controller:
         saveMapper = SaveMapper()
         saveMapper.deleteSave(save)
         self.__deleteSaveFiles(save.getId())
+    
+
+    def uploadSave(self, save, profileNumber):
+        self.__uploadSaveFiles(save.getId(), profileNumber)
 
 
     def modifySave(self, save, name, description):
@@ -94,7 +101,7 @@ class Controller:
             return
         
         if(os.path.isdir(destinyPath)):
-            print('No destiny file alredy exists... deleting!')
+            print('Destiny file alredy exists... deleting and copying!')
             shutil.rmtree(destinyPath)
         shutil.copytree(srcPath,destinyPath)
     
@@ -103,6 +110,15 @@ class Controller:
         path = "saves/"+(str)(saveId)
         shutil.rmtree(path)
 
-    def __uploadSave(self, save, profileNumber):
-        #TODO
-        pass
+    
+    def __uploadSaveFiles(self, saveId, profileNumber):
+        destinyPath = self.__pathToSaves + self.__profiles[profileNumber][0]
+        srcPath = "saves/" + (str)(saveId)
+
+        if(not os.path.isdir(srcPath)):
+            print("No source file found!")
+            return
+        
+        
+        shutil.rmtree(destinyPath)
+        shutil.copytree(srcPath,destinyPath)
