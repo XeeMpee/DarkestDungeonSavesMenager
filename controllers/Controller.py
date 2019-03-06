@@ -2,6 +2,7 @@ from database.Database import *
 import os
 import re
 import shutil
+import unicodedata
 
 from models.Save import *
 from models.SaveMapper import *
@@ -52,16 +53,27 @@ class Controller:
         for i in listOfProfiles:
             if(re.search('^profile_*',i)):
                 
-                # fd = os.open(str(self.__pathToSaves + i + "/persist.game.json"),os.O_RDONLY)
-                # text = os.read(fd,10000)
-                # print(text)
-                # textTrim1 = re.findall('estatename[\\\\0x1]+[a-zA-Z]+',str(text))[0]
-                # textTrim2 = textTrim1[10:]
-                # name = re.findall('[0-15][a-zA-Z]+',textTrim2)
-                # print(name)
-                # name = name[0][1:]
-                name = "hotfix"
-                saves.append((i,name))
+                # try:
+                    #text = str(open(str(self.__pathToSaves + i + "/persist.game.json"),encoding='unicode').read())
+                    # fd = os.open(str(self.__pathToSaves + i + "/persist.game.json"),os.O_RDONLY)
+                    # text = os.read(fd,10000)
+                    # print(text)
+                    # textTrim1 = re.findall('estatename[\\\\0x1]+[a-zA-Z]+',str(text))[0]
+                    # textTrim2 = textTrim1[10:]
+                    # name = re.findall('[0-15][a-zA-Z]+',textTrim2)
+                    # print(name)
+                    # name = name[0][1:]
+                    ## finded = re.findall('estatename.*',text, flags=re.U)
+                    ## print(text)
+                # except Exception as e:
+                    # name = "hotfix"
+                    # pass
+                
+                text = str(open(str(self.__pathToSaves + i + "/persist.game.json"),encoding='utf=8', errors='ignore').read())
+                print((str)(text))
+                textTrim1 = re.findall((('nameU').decode('utf-8')).decode('utf-8'),(str)(text))
+                print(textTrim1)                 
+                saves.append((i,'hotfix'))
                 self.__profiles = saves
 
     def saveGame(self, name, description, profileNumber):
