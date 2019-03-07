@@ -2,7 +2,6 @@ from database.Database import *
 import os
 import re
 import shutil
-import unicodedata
 
 from models.Save import *
 from models.SaveMapper import *
@@ -23,6 +22,14 @@ class Controller:
     getOrderOptions() : [str] - Return __orderByOption list.
     getProfilesList() : [str, str] - Returns __profiles list.    
     generateProfilesList() : void - Generates list of profiles by analyzing game saves directory.
+    saveGame(name:str, description:str, profileNumber:int) : void - Saves game as new save using params.
+    saveGameByReplacing(save:Save, profileNumber:int) : void - Saves game by replacing save passed as param.
+    deleteSave(save:Save) : void - Delete save passed as param.
+    uploadSave(save:Save, profileNumber:int) : Uploads saved game into game files to profile of number passed as param.
+    modifySave(save:Save, name:str, description:str) : Changes name and description of save passed as param.
+    __copySaveFiles(profileNumber:int, saveId:int) : Copies files of save from game files into new or existing folder in application files.
+    __deleteSaveFiles(saveId:int) : Deletes files of passed id save in application files.
+    __uploadSaveFiles(saveId:int, profileNumber:int) : Uploads files of passed id save into save game files of passed profile.
     """
 
     def __init__(self):
@@ -47,33 +54,17 @@ class Controller:
 
     def generateProfilesList(self):
         listOfProfiles = os.listdir(self.__pathToSaves)
-        listOfProfiles.reverse()
+        print(listOfProfiles)
+        listOfProfiles.sort()
         saves = list()
         
         for i in listOfProfiles:
             if(re.search('^profile_*',i)):
-                
-                # try:
-                    #text = str(open(str(self.__pathToSaves + i + "/persist.game.json"),encoding='unicode').read())
-                    # fd = os.open(str(self.__pathToSaves + i + "/persist.game.json"),os.O_RDONLY)
-                    # text = os.read(fd,10000)
-                    # print(text)
-                    # textTrim1 = re.findall('estatename[\\\\0x1]+[a-zA-Z]+',str(text))[0]
-                    # textTrim2 = textTrim1[10:]
-                    # name = re.findall('[0-15][a-zA-Z]+',textTrim2)
-                    # print(name)
-                    # name = name[0][1:]
-                    ## finded = re.findall('estatename.*',text, flags=re.U)
-                    ## print(text)
-                # except Exception as e:
-                    # name = "hotfix"
-                    # pass
-                
-                text = str(open(str(self.__pathToSaves + i + "/persist.game.json"),encoding='utf=8', errors='ignore').read())
-                print((str)(text))
-                textTrim1 = re.findall((('nameU').decode('utf-8')).decode('utf-8'),(str)(text))
-                print(textTrim1)                 
-                saves.append((i,'hotfix'))
+                text = str(open(str(self.__pathToSaves + i + "/persist.game.json"),encoding='utf-8', errors='ignore').read())
+                toTrim = re.findall('estatename.....[a-zA-Z]+.game',(str)(text))
+                name = toTrim[0][15:-5]
+                print(name)                 
+                saves.append((i, name))
                 self.__profiles = saves
 
     def saveGame(self, name, description, profileNumber):
@@ -83,9 +74,11 @@ class Controller:
         id = saveMapper.getIdentCurrent()
         self.__copySaveFiles(profileNumber, id)
 
+
     def saveGameByReplacing(self, save, profileNumber):
         id = save.getId()
         self.__copySaveFiles(profileNumber, id)        
+
 
     def deleteSave(self,save):
         saveMapper = SaveMapper()
@@ -100,7 +93,6 @@ class Controller:
     def modifySave(self, save, name, description):
         saveMapper = SaveMapper()
         saveMapper.modifySave(save, name, description)
-
 
         
     def __copySaveFiles(self, profileNumber, saveId):
@@ -130,7 +122,6 @@ class Controller:
         if(not os.path.isdir(srcPath)):
             print("No source file found!")
             return
-        
         
         shutil.rmtree(destinyPath)
         shutil.copytree(srcPath,destinyPath)
