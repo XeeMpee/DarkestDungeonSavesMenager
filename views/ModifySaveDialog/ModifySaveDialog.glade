@@ -50,6 +50,8 @@
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="margin_left">20</property>
+            <property name="margin_right">20</property>
             <child>
               <object class="GtkLabel" id="nameLabel">
                 <property name="name">nameLabel</property>
@@ -89,6 +91,8 @@
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="margin_left">20</property>
+            <property name="margin_right">20</property>
             <child>
               <object class="GtkLabel" id="descriptionLabel">
                 <property name="name">descriptionLabel</property>

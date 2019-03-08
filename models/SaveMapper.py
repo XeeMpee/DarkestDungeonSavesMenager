@@ -66,6 +66,15 @@ class SaveMapper:
         cur.execute(sql)
         self.__connection.commit()
 
+    
+    def resave(self, save):
+        sql = '''UPDATE Saves SET time=time('now'), date=date('now') WHERE id={}''' .format(save.getId())
+        cur = self.__connection.cursor()
+        cur.execute(sql)
+        self.__connection.commit() 
+        pass
+
+
     def getIdentCurrent(self):
         sql = """SELECT last_insert_rowid(); """
         cur = self.__connection.cursor()

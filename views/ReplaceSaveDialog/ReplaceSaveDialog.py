@@ -33,5 +33,6 @@ class ReplaceSaveDialog:
     def __yesButtonHandle(self,arg):
         self.__builder.get_object("progressBar").pulse()
         self.__controller.saveGameByReplacing(self.__save,self.__profileNumber)
+        self.__parentWindow.refresh()
         self.__window.destroy()
         pass

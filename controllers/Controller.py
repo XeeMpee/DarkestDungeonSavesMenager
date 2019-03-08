@@ -67,6 +67,7 @@ class Controller:
                 saves.append((i, name))
                 self.__profiles = saves
 
+
     def saveGame(self, name, description, profileNumber):
         save = Save(name,description)
         saveMapper = SaveMapper()
@@ -77,7 +78,9 @@ class Controller:
 
     def saveGameByReplacing(self, save, profileNumber):
         id = save.getId()
-        self.__copySaveFiles(profileNumber, id)        
+        self.__copySaveFiles(profileNumber, id)
+        saveMapper = SaveMapper()
+        saveMapper.resave(save)
 
 
     def deleteSave(self,save):

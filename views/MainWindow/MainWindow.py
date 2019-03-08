@@ -91,6 +91,8 @@ class MainWindow():
    
     def __createSaveRow(self, i):
             row = Gtk.ListBoxRow()
+            row.set_tooltip_text(i.getDescription())
+            # row.set_property('has_tooltip', True)
             hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=50)
             saveIcon = Gtk.Image()
             saveIcon.set_from_file('images/save.png')

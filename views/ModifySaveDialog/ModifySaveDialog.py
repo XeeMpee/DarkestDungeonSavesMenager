@@ -19,6 +19,10 @@ class ModifySaveDialog:
         self.__builder.add_from_file('views/ModifySaveDialog/ModifySaveDialog.glade')
         self.__window = self.__builder.get_object("modifySaveWindow")
         self.__builder.get_object("saveNameLabel").set_text('" {} "'.format(save.getName()))
+
+        self.__builder.get_object("nameEntry").set_text(save.getName())
+        self.__builder.get_object("descriptionTextArea").get_buffer().set_text(save.getDescription())
+
         
         # Handles:
         self.__builder.get_object("cancelButton").connect("clicked", self.__cancelButtonHandle)
