@@ -1,8 +1,10 @@
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gdk
-from gi.repository.GdkPixbuf import Pixbuf
+
+from gi.repository import Gtk, Gdk, GdkPixbuf
+from gi.repository.GdkPixbuf import Pixbuf, InterpType
 import re
+import time
 
 from controllers.Controller import *
 from controllers.OrderEnum import *
@@ -42,6 +44,12 @@ class MainWindow():
         self.__builder.get_object('saveGameButton').connect("clicked",self.__saveGameHandle)
         self.__builder.get_object('refreshButton').connect("clicked",self.refresh)
         self.__builder.get_object('sortByComboBox').connect("changed",self.refresh)
+        self.__builder.get_object('settignsEventBox').connect('enter-notify-event',self.__settingHoverStart)
+        self.__builder.get_object('settignsEventBox').connect('leave-notify-event',self.__settingHoverEnd)
+        self.__builder.get_object('settignsEventBox').connect('button-release-event',self.__settingsClicked)
+   
+
+        self.__builder.get_object('settingsImage').set_tooltip_text('Settings')
 
         style_provider = Gtk.CssProvider()
         style_provider.load_from_path("views/MainWindow/MainWindow.css")
@@ -51,6 +59,7 @@ class MainWindow():
         )
 
         self.__window.show_all()
+
 
         Gtk.main()
 
@@ -192,3 +201,21 @@ class MainWindow():
         for (row,save) in self.__savesList:
             if(actualRow == row):
                 return save
+
+
+    def __settingHoverStart(self,widget,event):
+        image = self.__builder.get_object('settingsImage')
+        pixbuf = image.get_pixbuf()
+        pixbuf = pixbuf.scale_simple(50, 50,  InterpType.BILINEAR)
+        image.set_from_pixbuf(pixbuf)
+
+
+    def __settingHoverEnd(self,widget,event):
+
+        image = self.__builder.get_object('settingsImage')
+        image.set_from_file('images/settings.png')
+ 
+    
+    def __settingsClicked(self,widget,event):
+        print("Settings image clicked")
+        pass
