@@ -48,11 +48,11 @@
                           <object class="GtkEventBox" id="settignsEventBox">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
+                            <property name="margin_bottom">110</property>
                             <child>
-                              <object class="GtkImage" id='settingsImage'>
+                              <object class="GtkImage" id="settingsImage">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_bottom">95</property>
                                 <property name="pixbuf">../../images/settings.png</property>
                               </object>
                             </child>

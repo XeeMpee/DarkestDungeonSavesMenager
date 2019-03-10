@@ -1,6 +1,6 @@
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gdk
+from gi.repository import Gtk, Gdk, Pango
 
 from models.Save import *
 from controllers.Controller import *
@@ -22,7 +22,8 @@ class ModifySaveDialog:
 
         self.__builder.get_object("nameEntry").set_text(save.getName())
         self.__builder.get_object("descriptionTextArea").get_buffer().set_text(save.getDescription())
-
+        self.__builder.get_object("descriptionTextArea").set_wrap_mode(Pango.WrapMode.WORD_CHAR)
+        
         
         # Handles:
         self.__builder.get_object("cancelButton").connect("clicked", self.__cancelButtonHandle)

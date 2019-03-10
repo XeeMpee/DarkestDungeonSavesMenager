@@ -6,6 +6,11 @@ CREATE TABLE Saves (
     time TIME
 );
 
+CREATE TABLE Path (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	path VARCHAR(128)
+);
+
 INSERT INTO Saves (name, description, date, time)
 VALUES ("Test save", "Save for testing", date('now'), time('now'));
 
@@ -17,3 +22,6 @@ INSERT INTO Saves(name,description,date,time) VALUES ("Save5", "Desc 5", "2018-0
 INSERT INTO Saves(name,description,date,time) VALUES ("Save6", "Desc 6", "2017-09-01", "09:09:22");
 INSERT INTO Saves(name,description,date,time) VALUES ("Save7", "Desc 7", "2017-12-11", "18:21:02");
 INSERT INTO Saves(name,description,date,time) VALUES ("Save8", "Desc 8", "2018-06-06", "16:14:00");
+
+
+INSERT INTO Path(path) VALUES ("/home/xeempee/.local/share/Steam/userdata/109096097/262060/remote/")

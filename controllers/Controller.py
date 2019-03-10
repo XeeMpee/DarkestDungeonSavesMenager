@@ -2,9 +2,11 @@ from database.Database import *
 import os
 import re
 import shutil
+import copy
 
 from models.Save import *
 from models.SaveMapper import *
+from models.PathMapper import *
 from controllers.OrderEnum import *
 
 class Controller:
@@ -34,7 +36,8 @@ class Controller:
 
     def __init__(self):
         
-        self.__pathToSaves = '/home/xeempee/.local/share/Steam/userdata/109096097/262060/remote/'
+        self.__pathToSaves = ''
+        self.setPathToSavesFromDatabase()
         self.__profiles = list()
         self.__orderByOptions = [
             ("Name",OrderEnum.NAME),
@@ -51,8 +54,13 @@ class Controller:
     def getProfilesList(self):
         return self.__profiles
 
+    
+    def getPathToSaves(self):
+        return self.__pathToSaves
+
 
     def generateProfilesList(self):
+        self.__profiles.clear()
         listOfProfiles = os.listdir(self.__pathToSaves)
         print(listOfProfiles)
         listOfProfiles.sort()
@@ -128,3 +136,8 @@ class Controller:
         
         shutil.rmtree(destinyPath)
         shutil.copytree(srcPath,destinyPath)
+
+    def setPathToSavesFromDatabase(self):
+        pathMapper = PathMapper()
+        path = pathMapper.getPath()
+        self.__pathToSaves = path + "/"

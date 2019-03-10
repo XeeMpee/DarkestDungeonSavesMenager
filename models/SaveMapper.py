@@ -50,6 +50,10 @@ class SaveMapper:
         
         return savesList
 
+    def getSearchedSaves(self, pattern):
+        sql = '''SELECT * FROM Saves WHERE nam'''
+        pass
+
     def deleteSave(self, save):
         
         sql = '''DELETE FROM Saves WHERE id={}'''.format(save.getId())
@@ -57,6 +61,7 @@ class SaveMapper:
         cur = self.__connection.cursor()
         cur.execute(sql)
         self.__connection.commit()
+
 
     def modifySave(self, save, name, description):
  

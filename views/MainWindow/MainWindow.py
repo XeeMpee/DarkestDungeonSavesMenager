@@ -1,8 +1,9 @@
 import gi
 gi.require_version('Gtk', '3.0')
 
-from gi.repository import Gtk, Gdk, GdkPixbuf
+from gi.repository import Gtk, Gdk, GdkPixbuf, Pango
 from gi.repository.GdkPixbuf import Pixbuf, InterpType
+
 import re
 import time
 
@@ -13,6 +14,7 @@ from views.ReplaceSaveDialog.ReplaceSaveDialog import *
 from views.DeleteSaveDialog.DeleteSaveDialog import *
 from views.UploadSaveDialog.UploadSaveDialog import *
 from views.ModifySaveDialog.ModifySaveDialog import *
+from views.SettingsDialog.SettingsDialog import *
 
 class MainWindow():
     """ 
@@ -31,6 +33,7 @@ class MainWindow():
     def run(self):
         self.__builder.add_from_file("./views/MainWindow/MainWindow.glade")
         self.__window = self.__builder.get_object("window")
+        
         
         self.__window.set_title('DarkestDungeonSaveMenager')
         self.__fillProfilesComboBox()
@@ -74,10 +77,12 @@ class MainWindow():
 
     def __fillProfilesComboBox(self):
         comboBox = self.__builder.get_object('profilesCombo')
+        comboBox.remove_all()
         for i in self.__controller.getProfilesList():
             profileNumber = re.findall('[0-9]+',i[0])[0]
             comboBox.append_text("Profile " + profileNumber + ": " + i[1])
         comboBox.set_active(0)
+
 
     def __fillSavesArea(self, order=OrderEnum.TIMEDESC):
         self.__newSaveRow = Gtk.ListBoxRow(name="saveRow")
@@ -102,13 +107,17 @@ class MainWindow():
             row = Gtk.ListBoxRow()
             row.set_tooltip_text(i.getDescription())
             # row.set_property('has_tooltip', True)
-            hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=50)
+            hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=20)
             saveIcon = Gtk.Image()
             saveIcon.set_from_file('images/save.png')
             hbox.pack_start(saveIcon, False, True, 20)
             # hbox.pack_start(Gtk.Label(i.getId()), False, False, 0)
-            hbox.pack_start(Gtk.Label(i.getName(), name="saveLabel"), False, True, 0)
-            timebox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,spacing=50)
+            label = Gtk.Label(i.getName(), name="saveLabel")
+            label.set_max_width_chars(10)
+            label.set_line_wrap(True)
+            label.set_line_wrap_mode(Pango.WrapMode.WORD_CHAR)
+            hbox.pack_start(label, False, True, 0)
+            timebox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,spacing=20)
             
             hbox.pack_end(timebox, False, False, 0)
             timebox.set_margin_top(20)
@@ -157,7 +166,9 @@ class MainWindow():
             savesListBox.remove(i)
     
     
-    def refresh(self, order=OrderEnum.TIMEDESC):    
+    def refresh(self, order=OrderEnum.TIMEDESC):
+        self.__controller.generateProfilesList()
+        self.__fillProfilesComboBox()
         self.__clearSaveListBox()
         orderByOption = self.__builder.get_object("sortByComboBox").get_active()
         enum = (OrderEnum)(orderByOption)
@@ -217,5 +228,6 @@ class MainWindow():
  
     
     def __settingsClicked(self,widget,event):
-        print("Settings image clicked")
+        settingsDialog = SettingsDialog(self, self.__controller)
+        settingsDialog.run()
         pass

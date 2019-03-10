@@ -1,6 +1,6 @@
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gdk
+from gi.repository import Gtk, Gdk, Pango   
 import re
 
 from controllers.Controller import *
@@ -15,6 +15,7 @@ class NewSaveDialog:
 
         self.__builder.add_from_file('views/NewSaveDialog/NewSaveDialog.glade')
         self.__window = self.__builder.get_object("newSaveWindow")
+        self.__builder.get_object("descriptionTextArea").set_wrap_mode(Pango.WrapMode.WORD_CHAR)
 
         # Handles:
         self.__builder.get_object("cancelButton").connect("clicked", self.__cancelButtonHandle)
