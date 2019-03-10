@@ -50,9 +50,33 @@ class SaveMapper:
         
         return savesList
 
-    def getSearchedSaves(self, pattern):
-        sql = '''SELECT * FROM Saves WHERE nam'''
-        pass
+
+    def getSearchedSaves(self, orderoption, pattern):
+        
+        sql = None
+        if(orderoption == OrderEnum.TIMEDESC):
+            sql = '''SELECT * FROM Saves WHERE name LIKE '%{}%' ORDER BY date DESC, time DESC, name;'''.format(pattern)
+        elif(orderoption == OrderEnum.TIMEASC):
+            sql = '''SELECT * FROM Saves WHERE name LIKE '%{}%' ORDER BY date ASC, time ASC, name;'''.format(pattern)
+        elif(orderoption == OrderEnum.NAME):
+            sql = '''SELECT * FROM Saves WHERE name LIKE '%{}%' ORDER BY name;'''.format(pattern)
+        
+        cur = self.__connection.cursor()
+        cur.execute(sql)
+        all = cur.fetchall()
+
+        savesList = list()
+        for i in all:
+            id = i[0]
+            name = i[1]
+            description = i[2]
+            date = i[3]
+            time = i[4]
+            save = Save(name,description,date,time,id)
+            savesList.append(save)
+
+        return savesList
+
 
     def deleteSave(self, save):
         

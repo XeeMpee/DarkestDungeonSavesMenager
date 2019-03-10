@@ -50,7 +50,7 @@ class MainWindow():
         self.__builder.get_object('settignsEventBox').connect('enter-notify-event',self.__settingHoverStart)
         self.__builder.get_object('settignsEventBox').connect('leave-notify-event',self.__settingHoverEnd)
         self.__builder.get_object('settignsEventBox').connect('button-release-event',self.__settingsClicked)
-   
+        self.__builder.get_object('searchButton').connect('clicked', self.__searchButtonClicked)
 
         self.__builder.get_object('settingsImage').set_tooltip_text('Settings')
 
@@ -84,7 +84,7 @@ class MainWindow():
         comboBox.set_active(0)
 
 
-    def __fillSavesArea(self, order=OrderEnum.TIMEDESC):
+    def __fillSavesArea(self, order=OrderEnum.TIMEDESC, pattern=None):
         self.__newSaveRow = Gtk.ListBoxRow(name="saveRow")
         self.__builder.get_object('savesListBox').add(self.__newSaveRow)
 
@@ -97,8 +97,12 @@ class MainWindow():
         self.__newSaveRow.add(hbox)
 
         saveMapper = SaveMapper()
-        saves = saveMapper.getAllSaves(order)
         
+        if(pattern==None):
+            saves = saveMapper.getAllSaves(order)
+        else:
+            saves = saveMapper.getSearchedSaves(order, pattern)
+
         for i in saves:
             self.__builder.get_object('savesListBox').add(self.__createSaveRow(i))
 
@@ -166,13 +170,13 @@ class MainWindow():
             savesListBox.remove(i)
     
     
-    def refresh(self, order=OrderEnum.TIMEDESC):
+    def refresh(self, order=OrderEnum.TIMEDESC, pattern=None):
         self.__controller.generateProfilesList()
         self.__fillProfilesComboBox()
         self.__clearSaveListBox()
         orderByOption = self.__builder.get_object("sortByComboBox").get_active()
         enum = (OrderEnum)(orderByOption)
-        self.__fillSavesArea(enum)
+        self.__fillSavesArea(enum, pattern)
         self.__window.show_all()
         
 
@@ -230,4 +234,10 @@ class MainWindow():
     def __settingsClicked(self,widget,event):
         settingsDialog = SettingsDialog(self, self.__controller)
         settingsDialog.run()
+        pass
+
+    def __searchButtonClicked(self, widget):
+        orderOption = self.__builder.get_object('sortByComboBox').get_active()
+        pattern = self.__builder.get_object('findArea').get_text()
+        self.refresh(orderOption, pattern)
         pass
