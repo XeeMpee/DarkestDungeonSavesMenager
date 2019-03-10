@@ -51,6 +51,8 @@ class MainWindow():
         self.__builder.get_object('settignsEventBox').connect('leave-notify-event',self.__settingHoverEnd)
         self.__builder.get_object('settignsEventBox').connect('button-release-event',self.__settingsClicked)
         self.__builder.get_object('searchButton').connect('clicked', self.__searchButtonClicked)
+        self.__window.connect("key-press-event",self.on_key_press_event)
+
 
         self.__builder.get_object('settingsImage').set_tooltip_text('Settings')
 
@@ -241,3 +243,14 @@ class MainWindow():
         pattern = self.__builder.get_object('findArea').get_text()
         self.refresh(orderOption, pattern)
         pass
+
+    def on_key_press_event(self, widget, event):
+        # print("Key press on widget: ", widget)
+        # print("Modifiers: ", event.state)
+        # print("Key val, name: ", event.keyval, Gdk.keyval_name(event.keyval))
+        # check the event modifiers (can also use SHIFTMASK, etc)
+        # ctrl = (event.state & Gdk.ModifierType.CONTROL_MASK)
+        # see if we recognise a keypress
+        if event.keyval == 65293:
+            if(self.__builder.get_object('findArea').is_focus()):
+                self.__searchButtonClicked(None)

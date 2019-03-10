@@ -20,7 +20,7 @@ class ReplaceSaveDialog:
         # Handles:
         self.__builder.get_object("noButton").connect("clicked",self.__noButtonHandle)
         self.__builder.get_object("yesButton").connect("clicked",self.__yesButtonHandle)
- 
+        self.__window.connect("key-press-event",self.on_key_press_event)
 
     def run(self):
         self.__window.show_all()
@@ -36,3 +36,9 @@ class ReplaceSaveDialog:
         self.__parentWindow.refresh()
         self.__window.destroy()
         pass
+
+    def on_key_press_event(self, widget, event):
+        if event.keyval == 65307:
+            self.__noButtonHandle(None)
+        if event.keyval == 65293:
+            self.__yesButtonHandle(None)

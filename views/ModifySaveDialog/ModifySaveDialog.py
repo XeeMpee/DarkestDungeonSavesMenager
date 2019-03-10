@@ -23,7 +23,7 @@ class ModifySaveDialog:
         self.__builder.get_object("nameEntry").set_text(save.getName())
         self.__builder.get_object("descriptionTextArea").get_buffer().set_text(save.getDescription())
         self.__builder.get_object("descriptionTextArea").set_wrap_mode(Pango.WrapMode.WORD_CHAR)
-        
+        self.__window.connect("key-press-event",self.on_key_press_event)
         
         # Handles:
         self.__builder.get_object("cancelButton").connect("clicked", self.__cancelButtonHandle)
@@ -43,5 +43,13 @@ class ModifySaveDialog:
         self.__parentWindow.refresh()
         self.__window.destroy()
 
+    def on_key_press_event(self, widget, event):
+        if event.keyval == 65307:
+            self.__cancelButtonHandle(None)
+        if event.keyval == 65293:
+            self.__confirmButtonHandle(None)
+
     def run(self):
         self.__window.show_all()
+
+    

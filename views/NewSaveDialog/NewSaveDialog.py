@@ -20,7 +20,8 @@ class NewSaveDialog:
         # Handles:
         self.__builder.get_object("cancelButton").connect("clicked", self.__cancelButtonHandle)
         self.__builder.get_object("confirmButton").connect("clicked", self.__confirmButtonHandle)
-   
+        self.__window.connect("key-press-event",self.on_key_press_event)
+        
     def run(self):
         self.__window.show_all()
 
@@ -38,3 +39,9 @@ class NewSaveDialog:
         self.__controller.saveGame(name,description,self.__profileNumber)
         self.__window.destroy()
         self.__parentWindow.refresh()
+
+    def on_key_press_event(self, widget, event):
+        if event.keyval == 65307:
+            self.__cancelButtonHandle(None)
+        if event.keyval == 65293:
+            self.__confirmButtonHandle(None)

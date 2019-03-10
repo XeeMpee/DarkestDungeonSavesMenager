@@ -24,7 +24,9 @@ class SettingsDialog:
         self.__builder.get_object("cancelButton").connect("clicked",self.__cancelButtonHandle)
         self.__builder.get_object("confirmButton").connect("clicked",self.__confirmButtonHandle)
         self.__pathWidget.connect("current-folder-changed", lambda s: print("current: {}".format(self.__pathWidget.get_current_folder())))
-
+        self.__window.connect("key-press-event",self.on_key_press_event)
+    
+    
     def run(self):
         self.__window.show_all()
 
@@ -41,3 +43,9 @@ class SettingsDialog:
         self.__window.destroy()
         self.__parentWindow.refresh()
         pass
+
+    def on_key_press_event(self, widget, event):
+        if event.keyval == 65307:
+            self.__cancelButtonHandle(None)
+        if event.keyval == 65293:
+            self.__confirmButtonHandle(None)
