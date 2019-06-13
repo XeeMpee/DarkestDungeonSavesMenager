@@ -69,8 +69,10 @@ class Controller:
         for i in listOfProfiles:
             if(re.search('^profile_*',i)):
                 text = str(open(str(self.__pathToSaves + i + "/persist.game.json"),encoding='utf-8', errors='ignore').read())
-                toTrim = re.findall('estatename.....[a-zA-Z]+.game',(str)(text))
-                name = toTrim[0][15:-5]
+                # toTrim = re.findall('estatename.....[a-zA-Z]+.game',(str)(text))
+                name = re.findall('estatename.*game_mode', str(text))
+                name = re.findall('[a-zA-Z]', name[0])[10:-8]
+                name = ''.join(name)
                 print(name)                 
                 saves.append((i, name))
                 self.__profiles = saves

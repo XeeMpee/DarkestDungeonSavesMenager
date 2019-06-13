@@ -20,7 +20,7 @@ class UploadSaveDialog:
         self.__builder.add_from_file('views/UploadSaveDialog/UploadSaveDialog.glade')
         self.__window = self.__builder.get_object("uploadSaveWindow")
         self.__builder.get_object("saveNameLabel").set_text('" {} "'.format(save.getName()))
-        self.__builder.get_object("profileNameLabel").set_text('"Profile {}: {}"'.format(self.__profileNumber, self.__controller.getProfilesList()[self.__profileNumber][1]))
+        self.__builder.get_object("profileNameLabel").set_text('"Profile {}: {}"'.format(self.__profileNumber + 1, self.__controller.getProfilesList()[self.__profileNumber][1]))
 
         # Handles:
         self.__builder.get_object("noButton").connect("clicked",self.__noButtonHandle)

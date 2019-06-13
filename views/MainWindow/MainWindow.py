@@ -82,7 +82,8 @@ class MainWindow():
         comboBox.remove_all()
         for i in self.__controller.getProfilesList():
             profileNumber = re.findall('[0-9]+',i[0])[0]
-            comboBox.append_text("Profile " + profileNumber + ": " + i[1])
+            profileNumber = (int)(profileNumber) + 1
+            comboBox.append_text("Profile " + (str)(profileNumber) + ": " + i[1])
         comboBox.set_active(0)
 
 
